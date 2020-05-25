@@ -1,0 +1,78 @@
+﻿function grater_than_clear() {
+
+    inputData = document.getElementById("grater_input_clear").value;
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://localhost:44313/GetStudentGratherThan?mark=' + inputData);
+
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+    xhr.send();
+
+    xhr.onload = function () {
+        if (xhr.status != 200) {
+            console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+        } else {
+            var result = JSON.parse(xhr.response);
+            var trHTML = '<tbody><tr><th>Name</th><th>AvgMark</th></tr>';
+            result.forEach(element => trHTML += '<tr><td>' + element.Name + '</td><td>' + element.AvgMark + '</td></tr>')
+            trHTML += "</tbody >";
+            document.getElementById('grater_records_table_clear').innerHTML = trHTML;
+        }
+    };
+
+}
+
+function lower_than_clear() {
+
+    inputData = document.getElementById("lower_input_clear").value;
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://localhost:44313/GetStudentLowerThan?mark=' + inputData);
+
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+    xhr.send();
+
+    xhr.onload = function () {
+        if (xhr.status != 200) {
+            console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+        } else {
+            console.log(JSON.parse(xhr.response));
+            var result = JSON.parse(xhr.response);
+            var trHTML = '<tbody><tr><th>Name</th><th>AvgMark</th></tr>';
+            result.forEach(element => trHTML += '<tr><td>' + element.Name + '</td><td>' + element.AvgMark + '</td></tr>')
+            trHTML += "</tbody >";
+            document.getElementById('lower_records_table_clear').innerHTML = trHTML;
+        }
+    };
+}
+
+function in_range_clear() {
+    inputDataMin = document.getElementById("range_input_min_clear").value;
+    inputDataMax = document.getElementById("range_input_max_clear").value;
+    params = { Item1: inputDataMin, Item2: inputDataMax };
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'https://localhost:44313/GetStudentInRange');
+
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+    xhr.send(JSON.stringify(params));
+
+    xhr.onload = function () {
+        if (xhr.status != 200) {
+            console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+        } else {
+            var result = JSON.parse(xhr.response)
+            var trHTML = '<tbody><tr><th>Name</th><th>AvgMark</th></tr>';
+            result.forEach(element => trHTML += '<tr><td>' + element.Name + '</td><td>' + element.AvgMark + '</td></tr>')
+            trHTML += "</tbody >";
+            document.getElementById('range_records_table_clear').innerHTML = trHTML;
+        }
+    };
+
+}
